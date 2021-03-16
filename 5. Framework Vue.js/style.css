@@ -37,7 +37,8 @@ button:focus {
 	cursor: pointer;
 }
 
-.goods-list {
+.goods-list,
+.cart {
 	display: flex;
 	justify-content: space-evenly;
 	flex-wrap: wrap;

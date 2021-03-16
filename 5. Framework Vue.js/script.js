@@ -6,8 +6,9 @@ var app = new Vue({
 		goods: [],
 		filteredGoods: [],
 		search: '',
-		message: 'List of goods',
-		isVisibleCart: false
+		message: 'list of goods',
+		isVisibleCart: false,
+		cartGoods: []
 	},
 	computed: {
 		messageUpper() {
@@ -58,11 +59,37 @@ var app = new Vue({
 		},
 
 		searchHandler() {
+			let arrGoods = (this.isVisibleCart) ? this.cartGoods : this.goods;
 			if (this.search === "") {
-				this.filteredGoods = this.goods;
+				this.filteredGoods = arrGoods;
 			}
 			const regexp = new RegExp(this.search, "i");
-			this.filteredGoods = this.goods.filter((good) => regexp.test(good.title));
+			this.filteredGoods = arrGoods.filter((good) => regexp.test(good.title));
+		},
+
+		visibleCart() {
+			this.isVisibleCart = !this.isVisibleCart;
+			if (this.isVisibleCart) {
+				this.message = (this.cartGoods.length != 0) ? 'cart' : 'the shopping cart is empty';
+				this.filteredGoods = this.cartGoods;
+			} else {
+				this.message = (this.goods.length != 0) ? 'list of goods' : 'the list of products is empty';
+				this.filteredGoods = this.goods;
+			}
+		},
+
+		addGoodCart(good) {
+			this.cartGoods.push(good);
+		},
+
+		delGoodCart(name) {
+			this.cartGoods = this.cartGoods.filter((item) => item.title !== name);
+			this.filteredGoods = this.cartGoods;
+			if (this.cartGoods.length === 0) this.message = 'the shopping cart is empty';
+		},
+
+		sumCart() {
+			return this.cartGoods.reduce((acc, item) => acc + item.price, 0);
 		}
 	},
 	mounted() {
