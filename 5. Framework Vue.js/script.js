@@ -6,7 +6,13 @@ var app = new Vue({
 		goods: [],
 		filteredGoods: [],
 		search: '',
-		message: ''
+		message: 'List of goods',
+		isVisibleCart: false
+	},
+	computed: {
+		messageUpper() {
+			return this.message.toUpperCase();
+		}
 	},
 	methods: {
 		fetch(error, success) {
@@ -39,8 +45,12 @@ var app = new Vue({
 		},
 
 		onFetchSuccess(data) {
-			this.goods = data;
-			this.filteredGoods = this.goods;
+			if (data.length != 0) {
+				this.goods = data;
+				this.filteredGoods = this.goods;
+			} else {
+				this.message = 'the list of products is empty';
+			}
 		},
 
 		onFetchError(err) {

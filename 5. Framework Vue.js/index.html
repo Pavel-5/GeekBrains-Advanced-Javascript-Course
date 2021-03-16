@@ -9,12 +9,12 @@
 <body>
 	<div id="app">
 		<header class="header">
-			<input type="text" id="search" v-model="search" @input="searchHandler" placeholder="Search">
+			<input type="text" v-model="search" @input="searchHandler" placeholder="Search">
 			<button class="cart-button" type="button">Cart</button>
 		</header>
 		<main class="main">
+			<h2 class="message" v-if="message.length != 0">{{ messageUpper }}</h2>
 			<div class="goods-list">
-				<p class="message" v-if="message.length != 0">{{ message }}</p>
 				<div class="goods-item" v-for="good in filteredGoods">
 					<div class="item__img">
 						<img v-bind:src="good.img">
