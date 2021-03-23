@@ -16,27 +16,15 @@
       <main class="main">
         <h2 class="message">{{ messageUpper }}</h2>
         <div class="goods-list" v-if="!isVisibleCart">
-          <div class="goods-item" v-for="good in filteredGoods">
-            <div class="item__img">
-              <img v-bind:src="good.img" />
-            </div>
-            <h3 class="item__title">{{ good.title }}</h3>
-            <p class="item__price">{{ good.price }}</p>
+          <goods-item v-for="good in filteredGoods" v-bind:item="good">
             <button class="item__button" @click="addGoodCart(good)">Add</button>
-          </div>
+          </goods-item>
         </div>
-        <div class="cart" v-if="isVisibleCart">
-          <div class="goods-item" v-for="good in filteredGoods">
-            <div class="item__img">
-              <img v-bind:src="good.img" />
-            </div>
-            <h3 class="item__title">{{ good.title }}</h3>
-            <p class="item__price">{{ good.price }}</p>
-            <button class="item__button" @click="delGoodCart(good.id)">
-              Delete
-            </button>
-          </div>
-        </div>
+        <cart
+          v-if="isVisibleCart"
+          :filteredgoods="filteredGoods"
+          @del="delGoodCart"
+        ></cart>
       </main>
     </div>
 
