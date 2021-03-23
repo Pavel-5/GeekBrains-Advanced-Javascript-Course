@@ -13,7 +13,8 @@
           Cart
         </button>
       </header>
-      <main class="main">
+			<error v-if="isError"></error>
+      <main class="main" v-if="!isError">
         <h2 class="message">{{ messageUpper }}</h2>
         <div class="goods-list" v-if="!isVisibleCart">
           <goods-item v-for="good in filteredGoods" v-bind:item="good">

@@ -40,12 +40,26 @@ Vue.component("cart", {
 			</button>
 		</goods-item>
 	</div>`,
-	props: ['filteredgoods'],
-	methods: {
-		delGoodCart(id) {
-			this.$emit('del', id);
-		},
-	},
+  props: ["filteredgoods"],
+  methods: {
+    delGoodCart(id) {
+      this.$emit("del", id);
+    },
+  },
+});
+
+Vue.component("error", {
+  template: '<h1 class="message">{{ mesUpper }}</h1>',
+  data() {
+    return {
+      mes: "the request to the server cannot be executed",
+    };
+  },
+	computed: {
+    mesUpper() {
+      return this.mes.toUpperCase();
+    },
+  },
 });
 
 var app = new Vue({
@@ -56,6 +70,7 @@ var app = new Vue({
     search: "",
     message: "list of goods",
     isVisibleCart: false,
+    isError: false,
     cartGoods: [],
   },
   computed: {
@@ -104,6 +119,7 @@ var app = new Vue({
 
     onFetchError(err) {
       this.message = err;
+      this.isError = true;
     },
 
     searchHandler(search) {
